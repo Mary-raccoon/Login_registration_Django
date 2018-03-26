@@ -1,0 +1,71 @@
+<html>
+<head>
+  <title>Login_Registration</title>  
+</head>
+<body>
+    {% if messages %}
+      {% for message in messages %}
+        <p{% if message.tags %} class = "{{ message.tag }}" {% endif %}>{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+    {% if request.session.errors %}
+      {% for error in request.session.errors %}
+        <p>{{ error }}</p>
+      {% endfor %}
+    {% endif %}
+    <div id="login">
+      <h3>Please login here:</h3>
+      <form action='/login' method='POST' id='login_form'>
+        {% csrf_token %}
+        <input type="hidden" name="type" value="login">
+        <table>
+          <tr>
+            <td><label for="email">Email:</label></td>
+            <td><input type="text" name="email" id="email"></td>
+          </tr>
+          <tr>
+            <td><label for="password">Password:</label></td>
+            <td><input type="password" name="password" id="password"></td>
+          </tr>
+          <tr>
+            <td><input type="submit" value="Sign in"></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div id="register">
+      <h3>If you don't have registration, please fill this form:</h3> 
+      <form  action="/process" method="POST" id='register_form'>
+        {% csrf_token %}
+        <input type="hidden" name="type" value="register">
+        <table>
+          <tr>
+            <td><label for="first_name">First Name:</label></td>
+            <td><input type="text" id="first_name" name="first_name"></td>
+          </tr>
+          <tr>
+            <td><label for="last_name">Last Name:</label></td>
+            <td><input type="text" id="last_name" name="last_name"></td>
+          </tr>
+          <tr>
+            <td><label for="email">Email:</label></td>
+            <td><input type="text" id="email" name="email"></td>
+          </tr>
+          <tr>
+            <td><label for="password">Password</label></td>
+            <td><input type="password" id="password" name="password"></td>
+          </tr>
+          <tr>
+            <td><label for="password">Repeat your password:</label></td>
+            <td><input type="password" id="password_confirm" name="password_confirm"></td>
+          </tr>
+          <tr>
+            <td><input type="submit" value="Done!"></td>
+          </tr> 
+        </table>
+        </div>
+      </form>
+  </div>
+</body>
+</html>
+
