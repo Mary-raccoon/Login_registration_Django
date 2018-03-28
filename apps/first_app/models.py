@@ -47,8 +47,27 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    
+    objects = UserManager()
+   
     def __repr__(self): # retrieves all records in the Blog table
         return "user_object: {} {} {} {}".format(self.first_name, self.last_name, self.email, self.password)
 
-    objects = UserManager()
+class QuoteManager(models.Manager):
+    def quote_validator(self, postData):
+        errors = {}
+        # if len(postData['quoted_by']) < 3:
+        #     errors['quoted_by'] = "Your Name should be longer than 3 characters"
+        if len(postData['message']) < 10:
+            errors['message'] = "Message should be longer than 10 characters"
+        return errors
+        
+class Quote(models.Model):
+    quoted_by = models.CharField(max_length=255)
+    message = models.TextField()
+    users = models.ManyToManyField(User, related_name="quotes")
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    objects = QuoteManager()
+
+    def __repr__(self): 
+        return "Quote_object: {} {} {}".format(self.message, self.quoted_by,self.users )

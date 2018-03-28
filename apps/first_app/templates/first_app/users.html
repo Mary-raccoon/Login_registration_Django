@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+    <a href="/quotes">Dashboard</a> |
+    <a href="/logout">Logout</a>
+
+    <h2>Posts by {{ user.first_name }}</h2>
+
+    {% for mess in messages.all %} 
+        <li>{{ mess.message }}</li>
+    {% endfor %}
+
+</body>
+</html>

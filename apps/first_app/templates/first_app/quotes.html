@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>Quotes</title>
+  {% load static %}
+</head>
+<body>
+  <a href="/logout">Logout</a>
+  <h1>Hello, {{ user.first_name }}!</h1>
+  <h3>Quotable Quotes:</h3>
+    <div>
+        {% for message in other_quotes %}
+        {% for i in message.users.all %}  
+          {{ message.message }} 
+          Posted By <a href="/users/{{user.id}}">{{ i.first_name }}</a>
+          <button href="/favorite_quote/{{quote.id}}">{{ action1 }}</button>
+          <br>
+        {% endfor %}
+        {% endfor %}
+    
+      </div>
+      
+      <div>
+        <h3>Your Favorites:</h3>
+        {% for message in user.quotes.all %}
+        {% for i in message.users.all %}
+        {% if i.id == request.session.id %}
+          {{ message.message }} 
+          Posted By <a href="/users/{{user.id}}">{{ i.first_name }}</a> 
+
+          <button href="/remove_quote/{{quote.id}}">{{ action2 }}</button>
+          <br>
+        {% endif %}  
+        {% endfor %}
+        {% endfor %}
+      </div>
+  
+      <div> 
+          
+        <h3>Contribute a Quote:</h3>
+        <form action='/create_process' method='POST' id='create_message'>
+          {% csrf_token %}
+            <label for="message">Message:</label>
+            <input type="textarea" name="message" id="message">
+            <input type="submit" value="Submit">
+      </form>
+        
+    </div>
+</body>
+</html>
